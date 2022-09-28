@@ -13,6 +13,10 @@ app.get("/messages", (req, res) => {
   res.send(messages);
 });
 
+app.get("/messages/:id", (req, res) => {
+  res.send(messages[req.params.id]);
+});
+
 app.post("/messages", (req, res) => {
   const msg = req.body.message;
   messages.push(msg);

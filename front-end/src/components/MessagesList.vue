@@ -1,29 +1,26 @@
 <template>
   <n-card title="Messages">
-    <n-list hoverable clickable v-for="(message, i) in messages" v-bind:key="i">
+    <n-list
+      hoverable
+      clickable
+      v-for="(message, index) in this.$store.state.messages"
+      v-bind:key="index"
+    >
       <n-list-item>
-        <n-li>
-          {{ message }}
-        </n-li>
+        <router-link :to="'message/' + index">
+          <n-li>
+            {{ message }}
+          </n-li>
+        </router-link>
       </n-list-item>
     </n-list>
   </n-card>
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
-  data() {
-    return {
-      messages: [],
-    };
-  },
   async created() {
-    this.emitter.on("updateMessages", (message) => {
-      this.messages.push(message);
-    });
-    this.messages = (await axios.get("http://localhost:3000/messages")).data;
+    this.$store.dispatch("getMessages");
   },
 };
 </script>

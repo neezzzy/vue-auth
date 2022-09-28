@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <n-card title="New Message">
     <n-form>
       <n-form-item>
@@ -11,7 +11,6 @@
   </n-card>
 </template>
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -21,12 +20,8 @@ export default {
   methods: {
     async submit() {
       try {
-        let msg = await axios.post("http://localhost:3000/messages", {
-          message: this.newMessage,
-        });
-
-        msg = msg.data;
-        this.emitter.emit("updateMessages", msg);
+        this.$store.dispatch("newMessage", this.newMessage);
+        this.newMessage = "";
       } catch (error) {
         console.log(error);
       }
@@ -34,4 +29,4 @@ export default {
   },
 };
 </script>
-<style lang=""></style>
+<style></style>
